@@ -52,7 +52,7 @@ export const computeCompressedSizeInBytes = function (input) {
 
 // Compute how many bytes an array of integers would use once compressed.
 // The input is expected to be an array of integers, some of them can be negative.
-export const computeCompressedSizeInBytesSigned = function (input) {
+export const computeCompressedSizeInBytesI32 = function (input) {
 	var c = input.length;
 	var answer = 0;
 	for (var i = 0; i < c; i++) {
@@ -64,7 +64,7 @@ export const computeCompressedSizeInBytesSigned = function (input) {
 // Compress an array of integers, return a compressed buffer (as an ArrayBuffer).
 // It is expected that the integers are non-negative: the caller is responsible
 // for making this check. Floating-point numbers are not supported.
-export const dump = function (input) {
+export const dumpU32 = function (input) {
 	var c = input.length;
 	var buf = new ArrayBuffer(computeCompressedSizeInBytes(input));
 	var view = new Int8Array(buf);
@@ -98,7 +98,7 @@ export const dump = function (input) {
 
 // From a compressed array of integers stored ArrayBuffer,
 // compute the number of compressed integers by scanning the input.
-export const computeHowManyIntegers = function (input) {
+export const len = function (input) {
 	var view = new Int8Array(input);
 	var c = view.length;
 	var count = 0;
@@ -107,10 +107,11 @@ export const computeHowManyIntegers = function (input) {
 	}
 	return c - count;
 };
+
 // Uncompress an array of integer from an ArrayBuffer, return the array.
 // It is assumed that they were compressed using the compress function, the caller
 // is responsible for ensuring that it is the case.
-export const load = function (input) {
+export const loadU32 = function (input) {
 	var array = []; // The size of the output is not yet known.
 	var inbyte = new Int8Array(input);
 	var end = inbyte.length;
@@ -150,9 +151,9 @@ export const load = function (input) {
 
 // Compress an array of integers, return a compressed buffer (as an ArrayBuffer).
 // The integers can be signed (negative), but floating-point values are not supported.
-export const dumpSigned = function (input) {
+export const dumpI32 = function (input) {
 	var c = input.length;
-	var buf = new ArrayBuffer(computeCompressedSizeInBytesSigned(input));
+	var buf = new ArrayBuffer(computeCompressedSizeInBytesI32(input));
 	var view = new Int8Array(buf);
 	var pos = 0;
 	for (var i = 0; i < c; i++) {
@@ -183,9 +184,9 @@ export const dumpSigned = function (input) {
 };
 
 // Uncompress an array of integer from an ArrayBuffer, return the array.
-// It is assumed that they were compressed using the compressSigned function, the caller
+// It is assumed that they were compressed using the compressI32 function, the caller
 // is responsible for ensuring that it is the case.
-export const loadSigned = function (input) {
+export const loadI32 = function (input) {
 	var array = []; // The size of the output is not yet known.
 	var inbyte = new Int8Array(input);
 	var end = inbyte.length;

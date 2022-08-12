@@ -1,6 +1,7 @@
 {
   "name": "@iuser/zig",
   "description": "a fast integer compression library in JavaScript",
+  "type":"module",
   "keywords": [
     "integers",
     "compression",
@@ -11,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/lemire/FastIntegerCompression.js.git"
   },
-  "main": "FastIntegerCompression.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha unit/basictests.js"
   },
@@ -21,8 +22,8 @@
   },
   "homepage": "https://github.com/lemire/FastIntegerCompression.js#readme",
   "devDependencies": {
-    "benchmark": "~1.0.0",
-    "mocha": "^2.5.3"
+    "benchmark": "~2.1.4",
+    "mocha": "^10.0.0"
   },
   "author": "Daniel Lemire <lemire@gmail.com> (http://lemire.me/en/)"
 }
