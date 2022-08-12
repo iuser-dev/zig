@@ -1,13 +1,13 @@
 {
   "name": "@iuser/zig",
   "description": "a fast integer compression library in JavaScript",
-  "type":"module",
+  "type": "module",
   "keywords": [
     "integers",
     "compression",
     "performance"
   ],
-  "version": "0.0.6",
+  "version": "0.0.7",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lemire/FastIntegerCompression.js.git"
