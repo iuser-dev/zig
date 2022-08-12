@@ -1,23 +1,19 @@
 /**
- * FastIntegerCompression.js : a fast integer compression library in JavaScript.
+ * js : a fast integer compression library in JavaScript.
  * (c) the authors
  * Licensed under the Apache License, Version 2.0.
  *
  *FastIntegerCompression
  * Simple usage :
- *  // var FastIntegerCompression = require("fastintcompression");// if you use node
+ *  // var = require("fastintcompression");// if you use node
  *  var array = [10,100000,65999,10,10,0,1,1,2000];
- *  var buf = FastIntegerCompression.compress(array);
- *  var back = FastIntegerCompression.uncompress(buf); // gets back [10,100000,65999,10,10,0,1,1,2000]
+ *  var buf = compress(array);
+ *  var back = uncompress(buf); // gets back [10,100000,65999,10,10,0,1,1,2000]
  *
  *
  * You can install the library under node with the command line
  *   npm install fastintcompression
  */
-"use strict";
-
-// You can provide an iterable.
-function FastIntegerCompression() {}
 
 // private function
 function bytelog(val) {
@@ -45,7 +41,7 @@ function zigzag_decode(val) {
 
 // Compute how many bytes an array of integers would use once compressed.
 // The input is expected to be an array of non-negative integers.
-FastIntegerCompression.computeCompressedSizeInBytes = function (input) {
+export const computeCompressedSizeInBytes = function (input) {
 	var c = input.length;
 	var answer = 0;
 	for (var i = 0; i < c; i++) {
@@ -56,7 +52,7 @@ FastIntegerCompression.computeCompressedSizeInBytes = function (input) {
 
 // Compute how many bytes an array of integers would use once compressed.
 // The input is expected to be an array of integers, some of them can be negative.
-FastIntegerCompression.computeCompressedSizeInBytesSigned = function (input) {
+export const computeCompressedSizeInBytesSigned = function (input) {
 	var c = input.length;
 	var answer = 0;
 	for (var i = 0; i < c; i++) {
@@ -68,11 +64,9 @@ FastIntegerCompression.computeCompressedSizeInBytesSigned = function (input) {
 // Compress an array of integers, return a compressed buffer (as an ArrayBuffer).
 // It is expected that the integers are non-negative: the caller is responsible
 // for making this check. Floating-point numbers are not supported.
-FastIntegerCompression.compress = function (input) {
+export const dump = function (input) {
 	var c = input.length;
-	var buf = new ArrayBuffer(
-		FastIntegerCompression.computeCompressedSizeInBytes(input),
-	);
+	var buf = new ArrayBuffer(computeCompressedSizeInBytes(input));
 	var view = new Int8Array(buf);
 	var pos = 0;
 	for (var i = 0; i < c; i++) {
@@ -104,7 +98,7 @@ FastIntegerCompression.compress = function (input) {
 
 // From a compressed array of integers stored ArrayBuffer,
 // compute the number of compressed integers by scanning the input.
-FastIntegerCompression.computeHowManyIntegers = function (input) {
+export const computeHowManyIntegers = function (input) {
 	var view = new Int8Array(input);
 	var c = view.length;
 	var count = 0;
@@ -116,7 +110,7 @@ FastIntegerCompression.computeHowManyIntegers = function (input) {
 // Uncompress an array of integer from an ArrayBuffer, return the array.
 // It is assumed that they were compressed using the compress function, the caller
 // is responsible for ensuring that it is the case.
-FastIntegerCompression.uncompress = function (input) {
+export const load = function (input) {
 	var array = []; // The size of the output is not yet known.
 	var inbyte = new Int8Array(input);
 	var end = inbyte.length;
@@ -156,11 +150,9 @@ FastIntegerCompression.uncompress = function (input) {
 
 // Compress an array of integers, return a compressed buffer (as an ArrayBuffer).
 // The integers can be signed (negative), but floating-point values are not supported.
-FastIntegerCompression.compressSigned = function (input) {
+export const dumpSigned = function (input) {
 	var c = input.length;
-	var buf = new ArrayBuffer(
-		FastIntegerCompression.computeCompressedSizeInBytesSigned(input),
-	);
+	var buf = new ArrayBuffer(computeCompressedSizeInBytesSigned(input));
 	var view = new Int8Array(buf);
 	var pos = 0;
 	for (var i = 0; i < c; i++) {
@@ -193,7 +185,7 @@ FastIntegerCompression.compressSigned = function (input) {
 // Uncompress an array of integer from an ArrayBuffer, return the array.
 // It is assumed that they were compressed using the compressSigned function, the caller
 // is responsible for ensuring that it is the case.
-FastIntegerCompression.uncompressSigned = function (input) {
+export const loadSigned = function (input) {
 	var array = []; // The size of the output is not yet known.
 	var inbyte = new Int8Array(input);
 	var end = inbyte.length;
@@ -229,7 +221,3 @@ FastIntegerCompression.uncompressSigned = function (input) {
 	}
 	return array;
 };
-
-///////////////
-
-module.exports = FastIntegerCompression;

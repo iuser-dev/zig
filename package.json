@@ -1,5 +1,5 @@
 {
-  "name": "fastintcompression",
+  "name": "@iuser/zig",
   "description": "a fast integer compression library in JavaScript",
   "keywords": [
     "integers",
