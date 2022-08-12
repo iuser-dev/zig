@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/lemire/FastIntegerCompression.js#readme",
   "devDependencies": {
+    "@iuser/node-loader": "^0.0.12",
     "benchmark": "~2.1.4",
     "mocha": "^10.0.0"
   },
